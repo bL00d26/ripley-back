@@ -15,6 +15,9 @@ const db = new Sequelize(
       },
     },
     logging: console.log,
+    sync: {
+      force: true,
+    },
   }
 );
 
