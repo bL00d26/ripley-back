@@ -1,8 +1,8 @@
 import express, { Application } from "express";
 import cors from "cors";
-import User from "./models/user";
 import userRoutes from "./routes/users";
 import db from "./db/connection";
+import User from "./models/user";
 
 class Server {
   private app: Application;

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/user";
+import { averageAge } from "./users.utils";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -17,9 +18,8 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const { body } = req;
-
   try {
+    const { body } = req;
     const user = await User.create(body);
     res.status(201).json({
       success: true,
@@ -28,7 +28,7 @@ export const createUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      error: "Error al conectarse",
+      error: "Error al crear usuario",
     });
   }
 };
@@ -36,12 +36,15 @@ export const createUser = async (req: Request, res: Response) => {
 export const getAverageAge = async (req: Request, res: Response) => {
   try {
     const users = await User.findAll();
-
-    return users;
+    const ageProm = averageAge(users);
+    res.status(201).json({
+      success: true,
+      ageProm,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      error: "Error al conectarse",
+      error: "Error al obtener el promedio de edad",
     });
   }
 };
