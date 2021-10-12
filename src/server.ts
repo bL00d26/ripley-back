@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import cors from "cors";
-
+import User from "./models/user";
 import userRoutes from "./routes/users";
 import db from "./db/connection";
 
@@ -24,6 +24,7 @@ class Server {
   async dbConnection() {
     try {
       await db.authenticate();
+      await db.sync();
       console.log("Database corriendo");
     } catch (error) {
       console.log(error);
